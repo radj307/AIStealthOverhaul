@@ -1,0 +1,13 @@
+{
+  "Nickname": "AI Stealth Overhaul",
+  "Visibility": "Visible",
+  "OneLineDescription": "Customizable AI stealth difficulty overhaul.",
+  "LongDescription": "Completely user-customizable replacement for AI stealth difficulty mods like Realistic AI Detection (RAID).",
+  "PreferredAutoVersioning": "LatestTag",
+  "RequiredMods": [],
+  "TargetedReleases": [
+    "SkyrimLE",
+    "SkyrimSE",
+    "SkyrimVR"
+  ]
+}
