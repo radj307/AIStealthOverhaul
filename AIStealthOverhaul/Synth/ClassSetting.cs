@@ -1,12 +1,10 @@
-using StealthOverhaul.Synth;
-
-namespace GrassFPS.Synth
+namespace AIStealthOverhaul.Synth
 {
     /// <summary>
     /// Provides a toggleable value for a <see langword="class"/> type.
     /// </summary>
     /// <typeparam name="T">Any class type that is default-constructible.</typeparam>
-    public class ClassSetting<T> : ValueSetting<T> where T : class, new()
+    public class ClassSetting<T> : ValueSetting<T> where T : class, IConvertible, new()
     {
         #region Constructors
         /// <summary>

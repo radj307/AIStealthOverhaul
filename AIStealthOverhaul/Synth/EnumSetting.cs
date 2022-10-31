@@ -1,6 +1,4 @@
-using System;
-
-namespace StealthOverhaul.Synth
+namespace AIStealthOverhaul.Synth
 {
     /// <summary>
     /// Provides a toggleable value for an <see cref="Enum"/> type.

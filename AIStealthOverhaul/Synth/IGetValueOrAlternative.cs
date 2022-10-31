@@ -1,4 +1,4 @@
-namespace StealthOverhaul.Synth
+namespace AIStealthOverhaul.Synth
 {
     public interface IGetValueOrAlternative<T>
     {

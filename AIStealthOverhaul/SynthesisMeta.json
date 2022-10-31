@@ -1,8 +1,8 @@
 {
   "Nickname": "AI Stealth Overhaul",
   "Visibility": "Visible",
-  "OneLineDescription": "Customizable AI stealth difficulty overhaul.",
-  "LongDescription": "Completely user-customizable replacement for AI stealth difficulty mods like Realistic AI Detection (RAID).",
+  "OneLineDescription": "Configurable enemy AI stealth behaviour overhaul.",
+  "LongDescription": "This is a alternative to Realistic AI Detection (RAID) by Olivier Doorenbos",
   "PreferredAutoVersioning": "LatestTag",
   "RequiredMods": [],
   "TargetedReleases": [

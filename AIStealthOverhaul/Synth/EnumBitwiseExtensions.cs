@@ -1,6 +1,4 @@
-using System;
-
-namespace StealthOverhaul.Synth
+namespace AIStealthOverhaul.Synth
 {
     /// <summary>
     /// Extends <see cref="Enum"/>-based types with support for bitwise operations.<br/>

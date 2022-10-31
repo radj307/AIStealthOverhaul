@@ -1,4 +1,4 @@
-namespace StealthOverhaul.Synth
+namespace AIStealthOverhaul.Synth
 {
     /// <summary>
     /// Provides a toggleable value for a <see langword="struct"/> type.
@@ -7,7 +7,7 @@ namespace StealthOverhaul.Synth
     /// <b>Use this for fundamental types like <see cref="int"/>, <see cref="float"/>, etc.</b>
     /// </remarks>
     /// <typeparam name="T"></typeparam>
-    public class StructSetting<T> : ValueSetting<T> where T : struct
+    public class StructSetting<T> : ValueSetting<T> where T : struct, IConvertible
     {
         #region Constructors
         /// <summary>
@@ -23,6 +23,7 @@ namespace StealthOverhaul.Synth
 
         #region Operators
         public static implicit operator StructSetting<T>(T? value) => new(value);
+        public static implicit operator T(StructSetting<T> setting) => setting.Value;
         #endregion Operators
     }
 }

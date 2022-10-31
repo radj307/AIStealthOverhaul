@@ -1,9 +1,6 @@
 using Mutagen.Bethesda.WPF.Reflection.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace StealthOverhaul.Synth
+namespace AIStealthOverhaul.Synth
 {
     #region FlagOperationType
     /// <summary>
