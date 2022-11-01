@@ -5,6 +5,12 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIStealthOverhaul", "AIStealthOverhaul\AIStealthOverhaul.csproj", "{9ADEAF9F-2BA4-4E42-A2CD-AB805EBD8678}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA7DF58A-E049-48A6-8543-9F8B640378E2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github-workflows", "github-workflows", "{070BA202-655F-46D1-A7C5-2401132E4055}"
 	ProjectSection(SolutionItems) = preProject

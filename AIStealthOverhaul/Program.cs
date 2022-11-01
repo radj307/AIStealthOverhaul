@@ -20,7 +20,7 @@ namespace AIStealthOverhaul
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
-            Settings.ReadPresetFileIfSet();
+            ImportPreset();
 
             Console.WriteLine("\n--- PATCHER STARTING ---"); // begin
 
@@ -31,7 +31,34 @@ namespace AIStealthOverhaul
 
             if (count.Equals(0)) Console.WriteLine("!!! No changes were made; something probably went wrong !!!");
 
-            Settings.WritePresetFileIfSet();
+            ExportPreset();
+        }
+
+        private static void ExportPreset()
+        {
+            bool result = Settings.ExportPresetIfAvailable();
+
+            if (result)
+            {
+                Console.WriteLine($"[INFO]\tSuccessfully exported {TopLevelSettings.GameSettingsName} to file \"{Settings.ConfigPresets.ExportToPath}\"");
+            }
+            else
+            {
+                Console.WriteLine($"[ERROR]\tFailed to export {TopLevelSettings.GameSettingsName} to file \"{Settings.ConfigPresets.ExportToPath}\"!");
+            }
+        }
+        private static void ImportPreset()
+        {
+            bool result = Settings.ImportPresetIfAvailable();
+
+            if (result)
+            {
+                Console.WriteLine($"[INFO]\tSuccessfully imported {TopLevelSettings.GameSettingsName} from file \"{Settings.ConfigPresets.ImportFromPath}\"");
+            }
+            else
+            {
+                Console.WriteLine($"[ERROR]\tFailed to import {TopLevelSettings.GameSettingsName} from file \"{Settings.ConfigPresets.ImportFromPath}\"!");
+            }
         }
     }
 }
