@@ -1,14 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
-    <ImplicitUsings>true</ImplicitUsings>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+		<ImplicitUsings>true</ImplicitUsings>
+		<PlatformTarget>x64</PlatformTarget>
+		<Nullable>enable</Nullable>
+		<Authors>radj307</Authors>
+		<Copyright>Copyright 2022 © by $(Authors)</Copyright>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.39.5" />
-    <PackageReference Include="Mutagen.Bethesda.Synthesis" Version="0.24.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.39.5" />
+		<PackageReference Include="Mutagen.Bethesda.Synthesis" Version="0.24.1" />
+	</ItemGroup>
 </Project>

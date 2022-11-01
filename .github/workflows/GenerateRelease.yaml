@@ -24,9 +24,6 @@ jobs:
     # Setup dependencies
     - uses: actions/setup-dotnet@main
 
-    - name:   Change Directory
-      run:    cd "${{github.workspace}}"
-
     - name:   'Publish Binaries to Directory'
       run:    dotnet publish ${{env.PROJECT_NAME}} -c ${{env.BUILD_TYPE}} /p:PublishProfile="${{env.PROJECT_NAME}}/Properties/PublishProfiles/FolderProfile.pubxml"
 

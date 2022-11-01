@@ -4,6 +4,13 @@ VisualStudioVersion = 17.2.32929.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIStealthOverhaul", "AIStealthOverhaul\AIStealthOverhaul.csproj", "{9ADEAF9F-2BA4-4E42-A2CD-AB805EBD8678}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA7DF58A-E049-48A6-8543-9F8B640378E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github-workflows", "github-workflows", "{070BA202-655F-46D1-A7C5-2401132E4055}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\GenerateRelease.yaml = .github\workflows\GenerateRelease.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +24,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{070BA202-655F-46D1-A7C5-2401132E4055} = {EA7DF58A-E049-48A6-8543-9F8B640378E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {21CF56B0-55C2-457A-8415-9CCF4C6E465C}
