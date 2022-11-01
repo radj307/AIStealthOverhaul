@@ -18,8 +18,8 @@ namespace AIStealthOverhaul.Settings
             "Missing parent directories will be created automatically.\n\n" +
             "Leave this blank if you don't want to save a preset file.")]
         public string SaveToPath = string.Empty;
-        [Tooltip("When checked, the new preset file will be opened with the default JSON handler application after being successfully written to disk.")]
-        public bool OpenFileWhenDone = true;
+        [Tooltip($"When checked, the new preset file specified by '{nameof(SaveToPath)}' will be opened with the default JSON handler application after being successfully written to disk.")]
+        public bool OpenFileOnSave = true;
         #endregion Fields
 
         #region Methods
@@ -125,7 +125,7 @@ namespace AIStealthOverhaul.Settings
 
             if (WritePresetFile(path, gameSettings))
             {
-                if (OpenFileWhenDone)
+                if (OpenFileOnSave)
                     OpenFileWithDefaultHandler(path);
                 return true;
             }
@@ -156,7 +156,7 @@ namespace AIStealthOverhaul.Settings
             }
 
             Console.WriteLine(
-                $"[INFO]\tSuccessfully opened preset file.\n\tPID: {proc.Id}{(proc.ProcessName.Length.Equals(0) ? "" : $"\n\tPNAME: \"{proc.ProcessName}\"")}"
+                $"[INFO]\tSuccessfully opened preset file with process {proc.Id}{(proc.ProcessName.Length.Equals(0) ? "" : $" (\"{proc.ProcessName}\")")}"
             );
             return true;
         }

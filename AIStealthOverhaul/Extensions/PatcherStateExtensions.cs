@@ -1,4 +1,4 @@
-﻿using Mutagen.Bethesda.Plugins;
+using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
@@ -11,6 +11,32 @@ namespace AIStealthOverhaul.Extensions
     /// </summary>
     public static class PatcherStateExtensions
     {
+        /// <remarks>
+        /// <b>This is a wrapper method for <see cref="AddOrReplaceGameSettingInternal(IPatcherState{ISkyrimMod, ISkyrimModGetter}, string, object)"/> that includes console logging.</b>
+        /// </remarks>
+        /// <inheritdoc cref="AddOrReplaceGameSettingInternal(IPatcherState{ISkyrimMod, ISkyrimModGetter}, string, object)"/>
+        public static bool AddOrReplaceGameSetting(this IPatcherState<ISkyrimMod, ISkyrimModGetter> state, string editorID, object data)
+        {
+            bool success = AddOrReplaceGameSettingInternal(state, editorID, data);
+
+            string recordName = $"\"{editorID}\"";
+
+            if (state.LinkCache.TryResolveIdentifier<IGameSettingGetter>(editorID, out FormKey formKey))
+            {
+                recordName = $"[GMST:{formKey.IDString()}] {recordName}";
+            }
+
+            if (success)
+            {
+                Console.WriteLine($"Set {recordName} to \"{data}\"");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"{recordName} was already set to \"{data}\"");
+                return false;
+            }
+        }
         /// <summary>
         /// Adds a new game setting with the specified name &amp; value, or replaces it if it already exists.
         /// </summary>
@@ -32,9 +58,7 @@ namespace AIStealthOverhaul.Extensions
         /// The type of the <paramref name="data"/> parameter didn't match the type of the existing value, or it was an unexpected type.<br/>
         /// Expected types: <see cref="float"/>, <see cref="int"/>, <see cref="bool"/>, &amp; <see cref="string"/>.
         /// </exception>
-        public static bool AddOrReplaceGameSetting<TMod, TModGetter>(this IPatcherState<TMod, TModGetter> state, string editorID, object data)
-            where TMod : class, ISkyrimMod, TModGetter
-            where TModGetter : class, ISkyrimModGetter
+        public static bool AddOrReplaceGameSettingInternal(this IPatcherState<ISkyrimMod, ISkyrimModGetter> state, string editorID, object data)
         {
             if (state.LinkCache.TryResolveIdentifier<IGameSettingGetter>(editorID, out FormKey formKey) && state.LinkCache.TryResolve<IGameSettingGetter>(formKey, out IGameSettingGetter? gameSettingGetter))
             { // RECORD ALREADY EXISTS:

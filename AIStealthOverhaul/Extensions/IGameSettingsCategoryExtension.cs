@@ -20,7 +20,7 @@ namespace AIStealthOverhaul.Extensions
             {
                 var fVal = fInfo.GetValue(category);
 
-                if (fVal is IValueSetting valueSetting)
+                if (fVal is IValueSetting valueSetting && valueSetting.IsEnabled)
                     changed.RefAdd(state.AddOrReplaceGameSetting(fInfo.Name, valueSetting.ValueObject));
                 else if (fVal is IGameSettingsCategory subCategory)
                     changed.RefAdd(subCategory.AddToPatch(state)); //< RECURSE

@@ -33,7 +33,7 @@ namespace StealthOverhaul.Settings
                     continue;
                 else if (fieldValue is IGameSettingsCategory category)
                     changed.RefAdd(category.AddToPatch(state));
-                else if (fieldValue is IValueSetting valueSetting)
+                else if (fieldValue is IValueSetting valueSetting && valueSetting.IsEnabled)
                     changed.RefAdd(state.AddOrReplaceGameSetting(fInfo.Name, valueSetting.ValueObject));
                 else
                     Console.WriteLine($"[WARN]\tReflection skipped member \"{typeof(StealthGameSettings).FullName}.{fInfo.Name}\" because type \"{fInfo.FieldType.FullName}\" does not implement \"{nameof(IGameSettingsCategory)}\" or \"{nameof(IValueSetting)}\"!");

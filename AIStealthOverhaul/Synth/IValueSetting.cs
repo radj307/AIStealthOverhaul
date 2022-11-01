@@ -1,4 +1,4 @@
-﻿using Mutagen.Bethesda.WPF.Reflection.Attributes;
+using Mutagen.Bethesda.WPF.Reflection.Attributes;
 
 namespace AIStealthOverhaul.Synth
 {
@@ -18,31 +18,4 @@ namespace AIStealthOverhaul.Synth
         [Ignore]
         bool IsEnabled { get; set; }
     }
-    //public abstract class ValueSetting<T, TInView> : ValueSetting<T>, IGetValueOrAlternative<TInView>, IValueSetting, IConvertible
-    //    where T : IConvertible
-    //    where TInView : IConvertible
-    //{
-    //    #region Constructor
-    //    protected ValueSetting(bool enableProperty, T value) : base(enableProperty, value) { }
-    //    #endregion Constructor
-
-    //    #region Properties
-    //    [Ignore]
-    //    public new T Value;
-
-    //    [SettingName(nameof(Value))]
-    //    public TInView ValueView
-    //    {
-    //        get => ToView(Value);
-    //        set => Value = FromView(value);
-    //    }
-    //    #endregion Properties
-
-    //    #region Converters
-    //    private static TInView ToView(T value) => (TInView)Convert.ChangeType(value, typeof(TInView));
-    //    private static T FromView(TInView viewValue) => (T)Convert.ChangeType(viewValue, typeof(T));
-    //    #endregion Converters
-
-    //    public TInView GetValueOrAlternative(TInView defaultValue, out bool changed) => ToView(GetValueOrAlternative(FromView(defaultValue), out changed));
-    //}
 }

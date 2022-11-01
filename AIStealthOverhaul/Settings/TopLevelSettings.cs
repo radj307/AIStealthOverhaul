@@ -8,7 +8,10 @@ namespace AIStealthOverhaul.Settings
     public class TopLevelSettings
     {
         #region Fields
-        [Tooltip("Game Settings are separated into groups based on what they do & how they're involved in stealth functions.")]
+        [Tooltip("Allows you to save & recall settings presets from the local filesystem.\n" +
+            "If you choose to load a preset file, any values set in the 'Game Settings' section are overwritten with the values from the preset file.")]
+        public ConfigPresetSettings ConfigPresets = new();
+        [Tooltip("Game Settings are separated into groups based on what they do & what they are used for.")]
         public StealthGameSettings GameSettings = new()
         {
             Core = new()
@@ -34,7 +37,7 @@ namespace AIStealthOverhaul.Settings
                 fSneakSoundLosMult = 0.28f,
                 fSneakEquippedWeightBase = 5f,
                 fSneakEquippedWeightMult = 0.25f,
-                fSneakActionMult = 1f,
+                fSneakActionMult = 1,
                 fSneakRunningMult = 1.9f,
             },
             Distances = new()
@@ -98,8 +101,6 @@ namespace AIStealthOverhaul.Settings
                 fCombatSearchStartWaitTime = 1f,
             }
         };
-        [Tooltip("Allows you to save & recall settings presets from the local filesystem.")]
-        public ConfigPresetSettings ConfigPresets = new();
         #endregion Fields
 
         #region Methods

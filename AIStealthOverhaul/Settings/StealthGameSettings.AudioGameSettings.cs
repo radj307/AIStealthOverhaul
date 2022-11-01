@@ -32,12 +32,16 @@ namespace StealthOverhaul.Settings
             public FloatSetting fSneakEquippedWeightMult = new();
 
             [SettingName(nameof(fSneakActionMult))]
-            [Tooltip("how loud non-movement sounds are, and thus how far away they are heard and how much they open the sneak eye indicator.\n" +
-                "includes melee weapon attacks (even if they only hit air), spell casting sounds, and projectile impacts etc.\n" +
-                "NOTE: despite being a \"float\", it strangely seems to behave like an \"integer\" that rounds down to the nearest whole number (eg: 1.9 = 1.0), and any value below 1 is interpreted as 1.")]
-            public FloatSetting fSneakActionMult = new();
+            [Tooltip("Multiplier that controls how loud non-movement sounds are, and thus how far away they can be detected.\n" +
+                "This includes weapon swings (even if they don't hit anything), spell casting, projectile impacts, etc.\n\n" +
+                "Note: Despite this Game Setting being stored as a floating-point number, it only accepts integral values that are greater than 1!\n\n" +
+                "(Default: 2)")]
+            public StructSetting<int> fSneakActionMult = new();
 
             [SettingName(nameof(fSneakRunningMult))]
+            [Tooltip("Multiplier that controls how much more noise is produced by running rather than walking.\n" +
+                "Values larger than `1.0` make running louder than walking, while values below `1.0` make running quieter than walking.\n\n" +
+                "(Default: 2)")]
             public FloatSetting fSneakRunningMult = new();
         }
     }

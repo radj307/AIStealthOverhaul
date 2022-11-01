@@ -1,4 +1,5 @@
 using Mutagen.Bethesda.WPF.Reflection.Attributes;
+using Newtonsoft.Json;
 
 namespace AIStealthOverhaul.Synth
 {
@@ -9,6 +10,7 @@ namespace AIStealthOverhaul.Synth
     /// See <see cref="ClassSetting{T}"/>, <see cref="StructSetting{T}"/>, &amp; <see cref="EnumSetting{T}"/> for ready-to-use classes that implement <see cref="ValueSetting{T}"/>.
     /// </remarks>
     /// <typeparam name="T">The value type to wrap.</typeparam>
+    [JsonObject]
     public abstract class ValueSetting<T> : IGetValueOrAlternative<T>, IValueSetting, IConvertible
         where T : IConvertible
     {
@@ -34,17 +36,20 @@ namespace AIStealthOverhaul.Synth
         /// <summary>
         /// The current value of this setting.
         /// </summary>
+        [JsonProperty(nameof(Value))]
         public T Value;
         #endregion Fields
 
         #region Properties
         [Ignore]
+        [JsonIgnore]
         public object ValueObject
         {
             get => Value;
             set => Value = (T)value;
         }
         [Ignore]
+        [JsonIgnore]
         public bool IsEnabled
         {
             get => EnableSetting;

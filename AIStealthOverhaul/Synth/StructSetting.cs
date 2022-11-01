@@ -19,11 +19,12 @@ namespace AIStealthOverhaul.Synth
         /// </summary>
         /// <param name="value">A starting value of type <typeparamref name="T"/>.<br/>When this is <see langword="null"/>, the base <see cref="ValueSetting{T}"/> starts disabled.</param>
         public StructSetting(T? value) : base(value is not null, value ?? default) { }
+        public StructSetting(bool enable, T value) : base(enable, value) { }
         #endregion Constructors
 
         #region Operators
         public static implicit operator StructSetting<T>(T? value) => new(value);
-        public static implicit operator T(StructSetting<T> setting) => setting.Value;
+        //public static implicit operator T(StructSetting<T> setting) => setting.Value;
         #endregion Operators
     }
 }

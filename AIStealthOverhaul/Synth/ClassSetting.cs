@@ -16,10 +16,11 @@ namespace AIStealthOverhaul.Synth
         /// </summary>
         /// <param name="value">A starting value of type <typeparamref name="T"/>.<br/>When this is <see langword="null"/>, the base <see cref="ValueSetting{T}"/> starts disabled.</param>
         public ClassSetting(T? value) : base(value is not null, value ?? new()) { }
+        public ClassSetting(bool enable, T value) : base(enable, value ) { }
         #endregion Constructors
 
         #region Operators
-        public static implicit operator ClassSetting<T>(T? value) => new(value);
+        //public static implicit operator ClassSetting<T>(T? value) => new(value);
         #endregion Operators
     }
 }
