@@ -6,7 +6,6 @@ namespace AIStealthOverhaul.Synth
     {
         internal const string IsEnabledName = "Enable";
         [SettingName(IsEnabledName)]
-        [JsonDiskName(IsEnabledName)]
         [Tooltip($"When you disable a setting, the patcher skips it and does not modify that record.")]
         abstract bool IsEnabled { get; set; }
     }

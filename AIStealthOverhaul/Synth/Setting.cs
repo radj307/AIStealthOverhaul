@@ -25,7 +25,6 @@ namespace AIStealthOverhaul.Synth
         #region Properties
         [JsonProperty]
         [SettingName(ISetting.IsEnabledName)]
-        [JsonDiskName(ISetting.IsEnabledName)]
         [Tooltip($"When you disable a setting, the patcher skips it and does not modify that record.")]
         public override bool IsEnabled
         {
