@@ -1,4 +1,3 @@
-using AIStealthOverhaul.Synth;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using Mutagen.Bethesda.WPF.Reflection.Attributes;
@@ -11,7 +10,7 @@ namespace AIStealthOverhaul.Settings
         #region Constructor
         public TopLevelSettings()
         {
-            ConfigPresets = new();
+            PresetIO = new();
             GameSettings = new()
             {
                 Core = new()
@@ -104,34 +103,33 @@ namespace AIStealthOverhaul.Settings
         }
         #endregion Constructor
 
-        // test:
-        public Setting<float> FloatSetting = new(1.5f);
-
         #region Fields
         internal const string ConfigPresetsName = "Import/Export Presets";
         [SettingName(ConfigPresetsName)]
         [Tooltip("Allows you to save & recall settings presets from the local filesystem.\n" +
             "If you choose to load a preset file, any values set in the 'Game Settings' section are overwritten with the values from the preset file.")]
-        public StealthGameSettingsCategoryIO ConfigPresets;
+        public StealthGameSettingsCategoryIO PresetIO;
+
         internal const string GameSettingsName = "Game Settings";
         [SettingName(GameSettingsName)]
         [Tooltip("Game Settings are separated into groups based on what they do & what they are used for.")]
-        public StealthGameSettings GameSettings;
+        public GameSettings GameSettings;
+
+        public bool EnableDebugLogging = false;
         #endregion Fields
 
         #region Methods
-        public void AddToPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state, out int changed)
-            => GameSettings.ApplyGameSettingsToPatch(state, out changed);
+        public void AddGameSettingsToPatchMod(IPatcherState<ISkyrimMod, ISkyrimModGetter> state, out int changed) => GameSettings.AddToPatch(state, out changed);
         public bool ImportPresetIfAvailable()
         {
-            if (ConfigPresets.Import(out var gmst) && gmst is not null)
+            if (PresetIO.Import(out var gmst) && gmst is not null)
             {
                 GameSettings = gmst;
                 return true;
             }
             return false;
         }
-        public bool ExportPresetIfAvailable() => ConfigPresets.Export(GameSettings);
+        public bool ExportPresetIfAvailable() => PresetIO.Export(GameSettings);
         #endregion Methods
     }
 }

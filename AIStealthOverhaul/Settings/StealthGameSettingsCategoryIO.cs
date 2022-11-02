@@ -1,10 +1,8 @@
-using AIStealthOverhaul.Synth;
 using Mutagen.Bethesda.WPF.Reflection.Attributes;
 using Newtonsoft.Json;
 using StealthOverhaul.Settings;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
 
 namespace AIStealthOverhaul.Settings
 {
@@ -16,21 +14,21 @@ namespace AIStealthOverhaul.Settings
         [Tooltip($"IMPORTs a previously-exported [{TopLevelSettings.GameSettingsName}] category from the specified JSON file.\n" +
             $"Accepts absolute and/or relative paths; paths are relative to the Synthesis working directory.\n\n" +
             "Leave this blank if you don't want to load a preset file.")]
-        public string ImportFromPath = string.Empty;
+        public string ImportFromPath = "";
         internal const string ExportToPathName = "Export To Path";
         [SettingName(ExportToPathName)]
         [Tooltip($"EXPORTs the current [{TopLevelSettings.GameSettingsName}] category to the specified JSON file.\n" +
             $"This occurs AFTER the patcher has completed successfully. Any missing parent directories will be created for you.\n" +
             $"Accepts absolute and/or relative paths; paths are relative to the Synthesis working directory.\n\n" +
             "Leave this blank if you don't want to save a preset file.")]
-        public string ExportToPath = string.Empty;
+        public string ExportToPath = "";
         [Tooltip($"When checked, successfully exported files are opened in the default handler application.")]
         public bool OpenExportedFile = true;
         #endregion Fields
 
         #region Statics
         #region ImportFromFile
-        private static bool ImportFromFile(string path, [MaybeNullWhen(false)] out StealthGameSettings? gameSettings)
+        private static bool ImportFromFile(string path, [MaybeNullWhen(false)] out GameSettings? gameSettings)
         {
             gameSettings = null;
 
@@ -39,7 +37,7 @@ namespace AIStealthOverhaul.Settings
 
             try
             {
-                gameSettings = JsonConvert.DeserializeObject<StealthGameSettings>(File.ReadAllText(path));
+                gameSettings = JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
             }
             catch (Exception ex)
             {
@@ -51,7 +49,7 @@ namespace AIStealthOverhaul.Settings
         }
         #endregion ImportFromFile
         #region ExportToFile
-        private static bool ExportToFile(string path, StealthGameSettings stealthGameSettings)
+        private static bool ExportToFile(string path, GameSettings stealthGameSettings)
         {
             string actualPath = Path.GetFullPath(Path.IsPathRooted(path) ? Path.Combine(Environment.CurrentDirectory, path) : path);
             string dirPath = Path.GetDirectoryName(actualPath)!;
@@ -79,7 +77,7 @@ namespace AIStealthOverhaul.Settings
             if (serialized.Length.Equals(0))
                 return false;
 
-            //Console.WriteLine($"[INFO]\tSuccessfully serialized an object instance of type \"{typeof(StealthGameSettings).FullName}\"");
+            //Console.WriteLine($"[INFO]\tSuccessfully serialized an object instance of type \"{typeof(GameSettings).FullName}\"");
 
             File.WriteAllText(actualPath, serialized, System.Text.Encoding.UTF8);
 
@@ -121,9 +119,13 @@ namespace AIStealthOverhaul.Settings
         #endregion Statics
 
         #region Methods
-        public bool Export(StealthGameSettings inst)
+        public bool IsExportToPathSet() => !ExportToPath.Trim().Length.Equals(0);
+        public bool Export(GameSettings inst)
         {
             if (ExportToPath.Length.Equals(0)) return false;
+
+            if (!Path.HasExtension(ExportToPath))
+                ExportToPath = Path.ChangeExtension(ExportToPath, "json");
 
             bool result = ExportToFile(ExportToPath, inst);
 
@@ -134,7 +136,8 @@ namespace AIStealthOverhaul.Settings
 
             return result;
         }
-        public bool Import([MaybeNullWhen(false)] out StealthGameSettings? inst)
+        public bool IsImportFromPathSet() => !ImportFromPath.Trim().Length.Equals(0);
+        public bool Import([MaybeNullWhen(false)] out GameSettings? inst)
         {
             if (ImportFromPath.Length.Equals(0))
             {

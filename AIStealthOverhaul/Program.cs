@@ -24,7 +24,7 @@ namespace AIStealthOverhaul
 
             Console.WriteLine("\n--- PATCHER STARTING ---"); // begin
 
-            Settings.AddToPatch(state, out int count);
+            Settings.AddGameSettingsToPatchMod(state, out int count);
 
             Console.WriteLine("--- PATCHER COMPLETE ---");
             Console.WriteLine($"Modified {count} GameSetting record{(count.Equals(1) ? "" : "s")}.\n");
@@ -36,28 +36,32 @@ namespace AIStealthOverhaul
 
         private static void ExportPreset()
         {
+            if (!Settings.PresetIO.IsExportToPathSet()) return;
+
             bool result = Settings.ExportPresetIfAvailable();
 
             if (result)
             {
-                Console.WriteLine($"[INFO]\tSuccessfully exported {TopLevelSettings.GameSettingsName} to file \"{Settings.ConfigPresets.ExportToPath}\"");
+                Console.WriteLine($"[INFO]\tSuccessfully exported {TopLevelSettings.GameSettingsName} to file \"{Settings.PresetIO.ExportToPath}\"");
             }
             else
             {
-                Console.WriteLine($"[ERROR]\tFailed to export {TopLevelSettings.GameSettingsName} to file \"{Settings.ConfigPresets.ExportToPath}\"!");
+                Console.WriteLine($"[ERROR]\tFailed to export {TopLevelSettings.GameSettingsName} to file \"{Settings.PresetIO.ExportToPath}\"!");
             }
         }
         private static void ImportPreset()
         {
+            if (!Settings.PresetIO.IsImportFromPathSet()) return;
+
             bool result = Settings.ImportPresetIfAvailable();
 
             if (result)
             {
-                Console.WriteLine($"[INFO]\tSuccessfully imported {TopLevelSettings.GameSettingsName} from file \"{Settings.ConfigPresets.ImportFromPath}\"");
+                Console.WriteLine($"[INFO]\tSuccessfully imported {TopLevelSettings.GameSettingsName} from file \"{Settings.PresetIO.ImportFromPath}\"");
             }
             else
             {
-                Console.WriteLine($"[ERROR]\tFailed to import {TopLevelSettings.GameSettingsName} from file \"{Settings.ConfigPresets.ImportFromPath}\"!");
+                Console.WriteLine($"[ERROR]\tFailed to import {TopLevelSettings.GameSettingsName} from file \"{Settings.PresetIO.ImportFromPath}\"!");
             }
         }
     }

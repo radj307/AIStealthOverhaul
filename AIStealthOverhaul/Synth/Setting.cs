@@ -1,76 +1,41 @@
-﻿using Mutagen.Bethesda.WPF.Reflection.Attributes;
+using Mutagen.Bethesda.WPF.Reflection.Attributes;
 using Newtonsoft.Json;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace AIStealthOverhaul.Synth
 {
-    public interface IValue
-    {
-        [Ignore]
-        object? ValueObject { get; set; }
-    }
-    public interface IValue<T> : IValue
-    {
-        abstract T Value { get; set; }
-    }
-
-    public abstract class SettingValue : IValue
-    {
-        public static readonly SettingValue<byte> Default = new(default);
-
-        public abstract object? ValueObject { get; set; }
-
-        public static SettingValue<T> NewValue<T>(T value) => new(value);
-        public static SettingValue<T> NewValue<T>() => new();
-    }
-    public class SettingValue<T> : SettingValue, IValue<T>, IValue
-    {
-        public SettingValue(T value) => Value = value;
-        public SettingValue() => Value = Activator.CreateInstance<T>();
-
-        public T Value { get; set; }
-        [JsonIgnore]
-        [Ignore]
-        public override object? ValueObject
-        {
-            get => Value;
-            set
-            {
-                if (value is T valueAsT)
-                {
-                    Value = valueAsT;
-                }
-            }
-        }
-
-        public new static readonly SettingValue<T> Default = new();
-
-        public static SettingValue<T> NewValue(T value) => new(value);
-        public static SettingValue<T> NewValue() => new();
-    }
-
-    public interface ISetting : IValue
-    {
-        bool IsEnabled { get; set; }
-    }
-    public interface ISetting<T> : ISetting, IValue, IGetValueOrAlternative<T> { }
-
+    /// <summary>
+    /// <see langword="abstract"/> base class of <see cref="Setting{T}"/>.
+    /// </summary>
     public abstract class Setting : ISetting, IValue
     {
-        [JsonProperty]
-        public const string IsEnabledName = "Enable";
-        [SettingName(IsEnabledName)]
+        #region Properties
         public abstract bool IsEnabled { get; set; }
+        [Ignore]
+        [JsonIgnore]
         public abstract object? ValueObject { get; set; }
+        #endregion Properties
     }
     public class Setting<T> : Setting, ISetting<T>, ISetting, IValue<T>, IValue
     {
-        public Setting(T value) => ValueContainer = SettingValue.NewValue(value);
-        public Setting() => ValueContainer = SettingValue.NewValue<T>();
+        #region Constructors
+        public Setting(T? value) => this.ValueContainer = (this.IsEnabled = value is not null) ? value! : SettingValue<T>.Default;
+        public Setting() => this.ValueContainer = SettingValue.NewValue<T>();
+        #endregion Constructors
 
-        public override bool IsEnabled { get; set; }
+        #region Properties
+        [JsonProperty]
+        [SettingName(ISetting.IsEnabledName)]
+        [JsonDiskName(ISetting.IsEnabledName)]
+        [Tooltip($"When you disable a setting, the patcher skips it and does not modify that record.")]
+        public override bool IsEnabled
+        {
+            get => _isEnabled && ValueContainer.ValueObject is not null;
+            set => _isEnabled = value;
+        }
+        private bool _isEnabled = false;
+        /// <summary>
+        /// Container that owns &amp; provides the values of <see cref="ValueObject"/> and <see cref="Value"/>
+        /// </summary>
         [Ignore]
         [JsonIgnore]
         public IValue<T> ValueContainer { get; set; }
@@ -78,15 +43,23 @@ namespace AIStealthOverhaul.Synth
         [JsonIgnore]
         public override object? ValueObject
         {
-            get => ValueContainer.ValueObject;
-            set => ValueContainer.ValueObject = value;
+            get => this.ValueContainer.ValueObject;
+            set => this.ValueContainer.ValueObject = value;
         }
+        internal const string ValueName = "Value";
         public T Value
         {
-            get => ValueContainer.Value;
-            set => ValueContainer.Value = value;
+            get => this.ValueContainer.Value;
+            set => this.ValueContainer.Value = value;
         }
+        #endregion Properties
 
+        #region Methods
         public T GetValueOrAlternative(T defaultValue, out bool changed) => throw new NotImplementedException();
+        #endregion Methods
+
+        #region Operators
+        public static implicit operator Setting<T>(T value) => new(value);
+        #endregion Operators
     }
 }

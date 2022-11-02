@@ -2,7 +2,7 @@ using AIStealthOverhaul.Settings;
 
 namespace StealthOverhaul.Settings
 {
-    public partial class StealthGameSettings : IGameSettingsCategory
+    public partial class GameSettings : IGameSettingsCategory
     {
         #region Fields
         public FormulaCoreGameSettings Core = new();
